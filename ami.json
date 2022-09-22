@@ -1,9 +1,11 @@
 {
     "variables": {
-        "source_ami": "",
-        "aws_instance_type": "",
-        "ssh_username": "",
-        "demo_account_id":""
+        "aws_access_key": "${{ secrets.AWS_ACCESS_KEY_ID_ROOT }}",
+        "aws_secret_key": "${{ secrets.AWS_SECRET_ACCESS_KEY_ROOT }}",
+        "aws_region": "us-east-1",
+        "source_ami": "ami-08c40ec9ead489470",
+        "ssh_username": "ubuntu"
+
     },
     "builders": [
         {
@@ -11,18 +13,30 @@
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key`}}",
             "region": "{{user `aws_region`}}",
-            "temporary_key_pair_type" : "ed25519",
-            "instance_type": "{{user `aws_instance_type`}}",
-			"security_group_id": "sg-0d0b808a1d4280f45",            
+            "instance_type": "t2.micro",
             "source_ami": "{{user `source_ami`}}",
-            "ssh_username": "{{user `ssh_username`}}",
-            "ami_name": "csye6225_{{timestamp}}",
-            "ami_users": "{{user `demo_account_id`}}",
-			"associate_public_ip_address": true,
-            "tags":{
-                "Name": "ketki-{{timestamp}}"
-			},            
-            "ami_description": "AWS Linux 2 AMI for web app"
-		}
+            "ssh_username": "ubuntu",
+            "ami_name": "csye7125_{{timestamp}}",
+           
+            "ami_description": "Amazon Ubantu Jenkins AMI for CSYE 7125"
+                     
+        }
+    ],
+    "provisioners": [
+        {
+					
+            "type": "shell",
+            "inline": [
+                "sudo apt update",
+				"curl -fsSL https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc",
+                "echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]  https://pkg.jenkins.io/debian binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list",
+                "sudo apt-get update",
+                "sudo apt-get install openjdk-11-jre -y",
+                "sudo apt-get install jenkins -y"
+                
+
+		
+            ]		
+        }
     ]
 }
