@@ -1,7 +1,7 @@
 {
     "variables": {
-        "aws_access_key": "${{ secrets.AWS_ACCESS_KEY_ID_ROOT }}",
-        "aws_secret_key": "${{ secrets.AWS_SECRET_ACCESS_KEY_ROOT }}",
+        "aws_access_key": "${{ secrets.AWS_ACCESS_KEY_ID }}",
+        "aws_secret_key": "${{ secrets.AWS_SECRET_ACCESS_KEY }}",
         "aws_region": "us-east-1",
         "source_ami": "ami-08c40ec9ead489470",
         "ssh_username": "ubuntu"
