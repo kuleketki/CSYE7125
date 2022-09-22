@@ -1,0 +1,27 @@
+{
+    "variables": {
+        "source_ami": "",
+        "aws_instance_type": "",
+        "ssh_username": "",
+        "demo_account_id":""
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "access_key": "{{user `aws_access_key`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "region": "{{user `aws_region`}}",
+            "instance_type": "{{user `aws_instance_type`}}",
+			"security_group_id": "sg-0d0b808a1d4280f45",            
+            "source_ami": "{{user `source_ami`}}",
+            "ssh_username": "{{user `ssh_username`}}",
+            "ami_name": "csye6225_{{timestamp}}",
+            "ami_users": "{{user `demo_account_id`}}",
+			"associate_public_ip_address": true,
+            "tags":{
+                "Name": "ketki-{{timestamp}}"
+			},            
+            "ami_description": "AWS Linux 2 AMI for web app"
+		}
+    ]
+}
